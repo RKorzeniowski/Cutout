@@ -48,7 +48,8 @@ parser.add_argument('--no-cuda', action='store_true', default=False,
                     help='enables CUDA training')
 parser.add_argument('--seed', type=int, default=0,
                     help='random seed (default: 1)')
-
+parser.add_argument('--data_path', type=string, default='data/')
+                    
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 cudnn.benchmark = True  # Should make training should go faster for large models
@@ -85,34 +86,34 @@ test_transform = transforms.Compose([
 
 if args.dataset == 'cifar10':
     num_classes = 10
-    train_dataset = datasets.CIFAR10(root='data/',
+    train_dataset = datasets.CIFAR10(root=args.data_path,
                                      train=True,
                                      transform=train_transform,
                                      download=True)
 
-    test_dataset = datasets.CIFAR10(root='data/',
+    test_dataset = datasets.CIFAR10(root=args.data_path,
                                     train=False,
                                     transform=test_transform,
                                     download=True)
 elif args.dataset == 'cifar100':
     num_classes = 100
-    train_dataset = datasets.CIFAR100(root='data/',
+    train_dataset = datasets.CIFAR100(root=args.data_path',
                                       train=True,
                                       transform=train_transform,
                                       download=True)
 
-    test_dataset = datasets.CIFAR100(root='data/',
+    test_dataset = datasets.CIFAR100(root=args.data_path,
                                      train=False,
                                      transform=test_transform,
                                      download=True)
 elif args.dataset == 'svhn':
     num_classes = 10
-    train_dataset = datasets.SVHN(root='data/',
+    train_dataset = datasets.SVHN(root=args.data_path,
                                   split='train',
                                   transform=train_transform,
                                   download=True)
 
-    extra_dataset = datasets.SVHN(root='data/',
+    extra_dataset = datasets.SVHN(root=args.data_path,
                                   split='extra',
                                   transform=train_transform,
                                   download=True)
@@ -123,7 +124,7 @@ elif args.dataset == 'svhn':
     train_dataset.data = data
     train_dataset.labels = labels
 
-    test_dataset = datasets.SVHN(root='data/',
+    test_dataset = datasets.SVHN(root=args.data_path,
                                  split='test',
                                  transform=test_transform,
                                  download=True)
